@@ -14,6 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   add("/", 1, "hourly")
   LANGS.forEach((l) => add(`/songs/${l.key}`, 0.9, "hourly"))
   add("/about", 0.3, "monthly")
+  add("/contact", 0.3, "monthly")
   add("/terms", 0.2, "monthly")
 
   const mods = await Promise.all(LANGS.map((l) => getModules(l.key)))

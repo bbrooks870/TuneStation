@@ -1,10 +1,12 @@
-## TuneStation: *Your AdFree Music Player & Downloader*
-With TuneStation, you can listen and download **over 80 million** songs (number of songs available on JioSaavn) for **FREE** without any ads!
+# TuneStation
 
-Check out TuneStation [here](https://tunestation.vercel.app/)
+Free online music player – https://songs.watchtvs.live
 
-## APIs, Frameworks and Tools
- - ReactJS
- - JioSaavn API: https://saavn.me/
- - Tailwind CSS: https://tailwindcss.com/
- - TailBlocks: https://tailblocks.cc/
+Next.js 14 (app router) + Tailwind. Song, album, artist and playlist pages are rendered on demand and cached (ISR); the player lives in the root layout so playback continues across pages.
+
+```bash
+npm install
+npm run dev
+```
+
+Support: support@watchtvs.live

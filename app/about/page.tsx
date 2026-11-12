@@ -34,8 +34,8 @@ export default function About() {
       </div>
       <p className="mt-10 text-sm leading-relaxed text-white/50">
         Music catalogue and streams are provided via JioSaavn. All songs, artwork and trademarks belong to their respective owners and labels.
-        TuneStation does not host any audio files. Rights holders can request removal of any content – see our{" "}
-        <Link href="/terms" className="text-accent hover:underline">terms of use</Link>.
+        TuneStation does not host any audio files. Rights holders can request removal of any content via our{" "}
+        <Link href="/contact" className="text-accent hover:underline">contact page</Link> or at support@watchtvs.live.
       </p>
     </article>
   )

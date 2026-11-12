@@ -210,6 +210,7 @@ export function Footer() {
           <p className="mb-3 font-semibold text-white">TuneStation</p>
           <ul className="space-y-1.5">
             <li><Link href="/about" className="hover:text-white">About</Link></li>
+            <li><Link href="/contact" className="hover:text-white">Contact us</Link></li>
             <li><Link href="/terms" className="hover:text-white">Terms of use</Link></li>
             <li><Link href="/search" className="hover:text-white">Search</Link></li>
           </ul>
