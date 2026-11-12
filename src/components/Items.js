@@ -39,7 +39,7 @@ function Items(props) { //song object, onClick function
         <div id={props.song.id}>
             {/* onClick: sends song details to Search.js and navigates to /listen */}
             <div onClick={props.onClick} className="relative h-full flex items-center border-gray-800 dark:border-light-200 border p-4 rounded-lg hover:cursor-pointer hover:border-green-500 hover:ring-2 hover:ring-green-500 bg-gray-200 dark:bg-deep-900">
-                <img alt="thumbnail"
+                <img alt={props.song.name || props.song.title} loading="lazy"
                     className="w-20 h-20 bg-gray-900 dark:bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                     src={props.song.image[2].link} />
                 <div className="flex-grow">

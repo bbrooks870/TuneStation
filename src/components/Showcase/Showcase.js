@@ -109,7 +109,7 @@ function Showcase(props) {
 
     useEffect(() => {
         document.body.scrollTop = document.documentElement.scrollTop = 0; //scroll to top of page
-        document.title = "Popular Now - TuneStation"
+        document.title = "TuneStation – Free Online Music Player | Listen to Hindi & English Songs"
         setHomepageData()
     }, [])
 
@@ -120,6 +120,10 @@ function Showcase(props) {
             {/* <div className="text-4xl text-pink-300 mx-5 mb-2 ">Good evening,</div> */}
             <section className="text-black dark:text-gray-400 bg-light-100 dark:bg-deep-900 body-font justify-center py-5">
                 <div className="container px-5 py-24 mx-auto mb-0 ">
+                    <div className="mb-8 px-2">
+                        <h1 className="text-3xl md:text-4xl font-semibold dark:text-white text-black">TuneStation – Free Online Music Player</h1>
+                        <p className="mt-2 text-base md:text-lg">Stream trending Hindi, Punjabi and English songs, new albums and top charts in 320kbps. No login, no app – just press play.</p>
+                    </div>
 
                     <Heading title="Trending Now" />
                     <Songs songs={trending_songs} searchFromId={searchFromId} />

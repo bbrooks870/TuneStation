@@ -5,11 +5,11 @@ function Card(props) { // name, img, key (id), onClick as props
         <div className="m-auto p-4 lg:w-1/4 md:w-1/2" onClick={props.onClick}>
             <div className="relative h-full flex flex-col items-center text-center">
                 <img className="hover:brightness-50 flex-shrink-0 rounded-lg w-screen h-56 object-cover object-center mb-4"
-                    src={props.image} />
+                    src={props.image} alt={props.name} width="224" height="224" loading="lazy" decoding="async" />
 
                 <button
                     className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full w-12 h-12 flex items-center justify-center pl-0.5 ring-2 bg-pink-700/50 ring-gray-100 focus:outline-none opacity-0 transition-opacity duration-300"
-                    id="controlBtn"
+                    aria-label={`Play ${props.name}`}
                     onMouseOver={(e) => e.currentTarget.style.opacity = "1"}
                     onMouseOut={(e) => e.currentTarget.style.opacity = "0"}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth="2"
@@ -26,6 +26,16 @@ function Card(props) { // name, img, key (id), onClick as props
             </div>
         </div>
     )
+}
+
+// Placeholder cards with the same footprint, so the grid doesn't jump when API data arrives (CLS)
+export function Skeletons() {
+    return [0, 1, 2, 3].map((i) => (
+        <div key={i} className="m-auto p-4 lg:w-1/4 md:w-1/2 w-full" aria-hidden="true">
+            <div className="rounded-lg h-56 mb-4 bg-gray-400/20 animate-pulse" />
+            <div className="h-7" />
+        </div>
+    ))
 }
 
 export default Card
