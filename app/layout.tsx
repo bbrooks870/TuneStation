@@ -60,8 +60,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </PlayerProvider>
 
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-N60Z1X7C22" strategy="afterInteractive" />
-        <Script id="ga" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-N60Z1X7C22');`}</Script>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-G32VHXN8XD" strategy="afterInteractive" />
+        <Script id="ga" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G32VHXN8XD');`}</Script>
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2772537567714474"
           strategy="lazyOnload"
