@@ -49,6 +49,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={sans.variable}>
       <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8LFK6PK624"></script>
+        <script
+          id="google-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-8LFK6PK624');
+            `,
+          }}
+        />
         <script dangerouslySetInnerHTML={{ __html: HASH_REDIRECT }} />
         <link rel="preconnect" href="https://c.saavncdn.com" />
         <link rel="preconnect" href="https://jiosaavn-api-codyandersan.vercel.app" crossOrigin="" />
@@ -60,8 +72,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </PlayerProvider>
 
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-G32VHXN8XD" strategy="afterInteractive" />
-        <Script id="ga" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G32VHXN8XD');`}</Script>
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2772537567714474"
           strategy="lazyOnload"
