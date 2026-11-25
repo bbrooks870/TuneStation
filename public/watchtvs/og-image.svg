@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0d0d"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#c8a84b" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0d0d0d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <!-- Border -->
+  <rect x="20" y="20" width="1160" height="590" rx="16" fill="none" stroke="#c8a84b" stroke-width="1" opacity="0.3"/>
+  <!-- Radio icon -->
+  <g transform="translate(100, 220)">
+    <path d="M0 80a80 80 0 0 1 160 0" fill="none" stroke="#c8a84b" stroke-width="6" stroke-linecap="round"/>
+    <path d="M25 80a55 55 0 0 1 110 0" fill="none" stroke="#c8a84b" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+    <path d="M50 80a30 30 0 0 1 60 0" fill="none" stroke="#c8a84b" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+    <circle cx="80" cy="80" r="8" fill="#c8a84b"/>
+  </g>
+  <!-- Text -->
+  <text x="320" y="270" font-family="Georgia, serif" font-size="72" font-weight="700" fill="#ffffff">GDL Live Radio</text>
+  <text x="320" y="330" font-family="Arial, sans-serif" font-size="28" fill="#999999">Broadcast Network by Watchtvs</text>
+  <text x="320" y="400" font-family="Arial, sans-serif" font-size="22" fill="#c8a84b">radio.watchtvs.live</text>
+  <!-- Tagline -->
+  <text x="320" y="460" font-family="Arial, sans-serif" font-size="20" fill="#666666">Live radio from 240 countries · Free · No sign-up</text>
+  <!-- Eyebrow -->
+  <text x="100" y="560" font-family="Arial, sans-serif" font-size="12" fill="#555555" letter-spacing="3">TUNE IN TO THE WORLD'S LIVE RADIO</text>
+</svg>
