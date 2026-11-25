@@ -68,6 +68,7 @@ function toSong(r: any): Song {
   const name = decode(r.name ?? r.title)
   const dl = Array.isArray(r.downloadUrl) ? r.downloadUrl : []
   const best = dl.find((d: any) => d.quality === "320kbps") ?? dl[dl.length - 1]
+  const audioUrl = best?.url ?? best?.link ?? ""
   return {
     id: String(r.id),
     name,
@@ -75,7 +76,7 @@ function toSong(r: any): Song {
     image: img(r.image),
     thumb: img(r.image, "150"),
     href: songPath(name, String(r.id)),
-    src: best?.link?.replace(/^http:/, "https:"),
+    src: audioUrl ? String(audioUrl).replace(/^http:/, "https:") : undefined,
     duration: Number(r.duration) || 0,
     album: decode(r.album?.name ?? r.album),
     albumId: String(r.album?.id ?? ""),

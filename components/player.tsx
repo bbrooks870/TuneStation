@@ -16,7 +16,8 @@ async function resolveSrc(t: Track): Promise<string | null> {
     const d = (await r.json())?.data?.[0]
     const dl: any[] = d?.downloadUrl ?? []
     const best = dl.find((x) => x.quality === "320kbps") ?? dl[dl.length - 1]
-    return best?.link?.replace(/^http:/, "https:") ?? null
+    const audioUrl = best?.url ?? best?.link ?? null
+    return audioUrl ? String(audioUrl).replace(/^http:/, "https:") : null
   } catch {
     return null
   }
