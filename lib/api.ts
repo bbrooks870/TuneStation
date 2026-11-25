@@ -1,17 +1,21 @@
 import { albumPath, artistPath, playlistPath, songPath } from "./site"
 import type { Card, Track } from "./types"
 
-// ponytail: third-party JioSaavn wrapper; its firewall rejects requests without a browser UA.
-const BASE = "https://jiosaavn-api-codyandersan.vercel.app"
+// Local self-hosted JioSaavn API container running on chunks:3008
+const BASE = process.env.SAAVN_API_URL || "http://127.0.0.1:3008/api"
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
 
 /** null = genuinely not found (cached as 404); throws on outages so ISR keeps the last good page. */
 async function api<T = any>(path: string, revalidate = 3600): Promise<T | null> {
-  const r = await fetch(BASE + path, { headers: { "User-Agent": UA, Accept: "application/json" }, next: { revalidate } })
-  if (r.status === 404 || r.status === 400) return null
-  if (!r.ok) throw new Error(`API ${r.status} ${path}`)
-  const j = await r.json()
-  return (j?.data ?? null) as T
+  try {
+    const r = await fetch(BASE + path, { headers: { "User-Agent": UA, Accept: "application/json" }, next: { revalidate } })
+    if (r.status === 404 || r.status === 400) return null
+    if (!r.ok) return null
+    const j = await r.json()
+    return (j?.data ?? null) as T
+  } catch {
+    return null
+  }
 }
 
 /* ---------- normalisers (the API returns different shapes per endpoint) ---------- */
@@ -129,7 +133,7 @@ export async function getModules(lang: string) {
 }
 
 export async function getSong(id: string) {
-  const d = await api<any[]>(`/songs?id=${encodeURIComponent(id)}`, 86400)
+  const d = await api<any[]>(`/songs/${encodeURIComponent(id)}`, 86400)
   return d?.[0] ? toSong(d[0]) : null
 }
 
@@ -196,7 +200,10 @@ export async function getArtistSongs(id: string) {
 
 export async function search(q: string) {
   const qs = encodeURIComponent(q)
-  const [songs, all] = await Promise.all([api(`/search/songs?query=${qs}&page=1&limit=20`, 600), api(`/search/all?query=${qs}`, 600)])
+  const [songs, all] = await Promise.all([
+    api(`/search/songs?query=${qs}&page=1&limit=20`, 600),
+    api(`/search?query=${qs}`, 600)
+  ])
   return {
     songs: ((songs?.results ?? []) as any[]).map(toSong),
     albums: cards(all?.albums?.results),

@@ -63,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <script dangerouslySetInnerHTML={{ __html: HASH_REDIRECT }} />
         <link rel="preconnect" href="https://c.saavncdn.com" />
-        <link rel="preconnect" href="https://jiosaavn-api-codyandersan.vercel.app" crossOrigin="" />
+
       </head>
       <body className="min-h-screen font-sans">
         <PlayerProvider>

@@ -6,13 +6,13 @@ import type { Track } from "@/lib/types"
 import { fmtTime } from "@/lib/site"
 import { DownloadIcon, MuteIcon, NextIcon, PauseIcon, PlayIcon, PrevIcon, SpinnerIcon, VolumeIcon } from "./icons"
 
-const API = "https://jiosaavn-api-codyandersan.vercel.app"
+const API = "/api/saavn"
 
 /** Fetch the 320kbps stream URL for tracks that came from listings without one. */
 async function resolveSrc(t: Track): Promise<string | null> {
   if (t.src) return t.src
   try {
-    const r = await fetch(`${API}/songs?id=${encodeURIComponent(t.id)}`)
+    const r = await fetch(`${API}/songs/${encodeURIComponent(t.id)}`)
     const d = (await r.json())?.data?.[0]
     const dl: any[] = d?.downloadUrl ?? []
     const best = dl.find((x) => x.quality === "320kbps") ?? dl[dl.length - 1]
