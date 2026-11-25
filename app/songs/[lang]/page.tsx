@@ -4,9 +4,8 @@ import { ModulesView } from "@/components/modules-view"
 import { Crumbs, JsonLd, LangChips } from "@/components/ui"
 import { LANGS, SITE_URL, langName } from "@/lib/site"
 
-export const revalidate = 3600
-export const dynamicParams = false
-export const generateStaticParams = () => LANGS.map((l) => ({ lang: l.key }))
+export const dynamic = "force-dynamic"
+
 
 const year = () => new Date().getFullYear()
 

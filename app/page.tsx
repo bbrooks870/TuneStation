@@ -2,7 +2,8 @@ import { ModulesView } from "@/components/modules-view"
 import { JsonLd, LangChips, SearchBox } from "@/components/ui"
 import { SITE_URL } from "@/lib/site"
 
-export const revalidate = 3600
+export const dynamic = "force-dynamic"
+
 
 const FAQ = [
   {
