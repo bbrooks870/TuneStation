@@ -5,8 +5,7 @@ import { SITE_URL, artistPath, clip, fmtCount, langName, slugify } from "@/lib/s
 import { Crumbs, Grid, Hero, JsonLd, Section } from "@/components/ui"
 import { PlayAll, TrackList } from "@/components/tracks"
 
-export const revalidate = 86400
-export const generateStaticParams = () => []
+export const dynamic = "force-dynamic"
 
 type P = { params: { slug: string; id: string } }
 

@@ -5,8 +5,7 @@ import { SITE_URL, clip, fmtCount, playlistPath, slugify } from "@/lib/site"
 import { Crumbs, Hero, JsonLd } from "@/components/ui"
 import { PlayAll, TrackList } from "@/components/tracks"
 
-export const revalidate = 21600
-export const generateStaticParams = () => []
+export const dynamic = "force-dynamic"
 
 type P = { params: { slug: string; id: string } }
 
