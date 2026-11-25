@@ -3,10 +3,12 @@ import type { Card } from "@/lib/types"
 import { LANGS, artistPath } from "@/lib/site"
 import { PlayIcon, SearchIcon } from "./icons"
 
+const CDN_LOGO = "https://cdn.jsdelivr.net/gh/bbrooks870/TuneStation@master/public/logo.png"
+
 export function Logo() {
   return (
     <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="TuneStation home">
-      <img src="/logo.png" alt="" width={32} height={32} className="h-8 w-8 rounded-lg" />
+      <img src={CDN_LOGO} alt="" width={32} height={32} className="h-8 w-8 rounded-lg" />
       <span className="hidden text-lg font-bold tracking-tight text-white sm:inline">
         Tune<span className="text-accent">Station</span>
       </span>
@@ -39,11 +41,20 @@ export function Header() {
         <div className="flex-1 md:max-w-md">
           <SearchBox />
         </div>
-        <nav className="ml-auto hidden items-center gap-5 text-sm text-white/70 lg:flex" aria-label="Main">
-          <Link href="/songs/hindi" className="hover:text-white">Hindi</Link>
-          <Link href="/songs/punjabi" className="hover:text-white">Punjabi</Link>
-          <Link href="/songs/english" className="hover:text-white">English</Link>
-          <Link href="/about" className="hover:text-white">About</Link>
+        <nav className="ml-auto flex items-center gap-3 text-sm text-white/70 md:gap-5" aria-label="Main">
+          <Link
+            href="/favorites"
+            className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80 transition hover:bg-white/10 hover:text-white md:text-sm"
+          >
+            <span className="text-accent">♥</span>
+            <span>Favorites</span>
+          </Link>
+          <div className="hidden items-center gap-5 lg:flex">
+            <Link href="/songs/hindi" className="hover:text-white">Hindi</Link>
+            <Link href="/songs/punjabi" className="hover:text-white">Punjabi</Link>
+            <Link href="/songs/english" className="hover:text-white">English</Link>
+            <Link href="/about" className="hover:text-white">About</Link>
+          </div>
         </nav>
       </div>
     </header>

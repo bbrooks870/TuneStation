@@ -5,7 +5,38 @@ import { useState } from "react"
 import type { Track } from "@/lib/types"
 import { fmtTime } from "@/lib/site"
 import { downloadTrack, usePlayer } from "./player"
-import { DownloadIcon, EqIcon, PauseIcon, PlayIcon, SpinnerIcon } from "./icons"
+import { useFavorites } from "./favorites-context"
+import { DownloadIcon, EqIcon, HeartIcon, PauseIcon, PlayIcon, SpinnerIcon } from "./icons"
+
+export function FavButton({ track, big = false }: { track: Track; big?: boolean }) {
+  const { isFav, toggleFav } = useFavorites()
+  const fav = isFav(track.id)
+  if (big)
+    return (
+      <button
+        onClick={() => toggleFav(track)}
+        aria-label={fav ? "Remove from Favorites" : "Add to Favorites"}
+        className={`inline-flex h-12 items-center gap-2 rounded-full border px-6 font-semibold transition ${
+          fav
+            ? "border-accent bg-accent/15 text-accent hover:bg-accent/25"
+            : "border-white/25 text-white hover:border-white hover:bg-white/5"
+        }`}
+      >
+        <HeartIcon filled={fav} className="h-5 w-5" />
+        {fav ? "Favorited" : "Favorite"}
+      </button>
+    )
+  return (
+    <button
+      onClick={() => toggleFav(track)}
+      aria-label={fav ? `Remove ${track.name} from Favorites` : `Add ${track.name} to Favorites`}
+      title={fav ? "Favorited" : "Add to Favorites"}
+      className={`rounded-full p-2 transition hover:bg-white/10 ${fav ? "text-accent" : "text-white/40 hover:text-white"}`}
+    >
+      <HeartIcon filled={fav} className="h-4 w-4" />
+    </button>
+  )
+}
 
 export function DownloadButton({ track, big = false }: { track: Track; big?: boolean }) {
   const [busy, setBusy] = useState(false)
@@ -93,7 +124,10 @@ export function TrackList({ tracks, showAlbum = true, numbered = true }: { track
             </div>
             {showAlbum ? <p className="hidden truncate text-sm text-white/45 md:block">{t.album}</p> : <span className="hidden md:block" />}
             <span className="hidden text-right text-sm tabular-nums text-white/45 md:block">{t.duration ? fmtTime(t.duration) : ""}</span>
-            <DownloadButton track={t} />
+            <div className="flex items-center gap-1">
+              <FavButton track={t} />
+              <DownloadButton track={t} />
+            </div>
           </li>
         )
       })}

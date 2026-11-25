@@ -4,6 +4,7 @@ import Script from "next/script"
 import "./globals.css"
 import { Footer, Header } from "@/components/ui"
 import { PlayerProvider } from "@/components/player"
+import { FavoritesProvider } from "@/components/favorites-context"
 import { SITE_NAME, SITE_URL } from "@/lib/site"
 
 const sans = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" })
@@ -73,11 +74,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       </head>
       <body className="min-h-screen font-sans">
-        <PlayerProvider>
-          <Header />
-          <main className="mx-auto max-w-screen-2xl px-4 pb-10 pt-4 md:px-6">{children}</main>
-          <Footer />
-        </PlayerProvider>
+        <FavoritesProvider>
+          <PlayerProvider>
+            <Header />
+            <main className="mx-auto max-w-screen-2xl px-4 pb-10 pt-4 md:px-6">{children}</main>
+            <Footer />
+          </PlayerProvider>
+        </FavoritesProvider>
       </body>
     </html>
   )

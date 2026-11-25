@@ -4,7 +4,7 @@ import { notFound, permanentRedirect } from "next/navigation"
 import { getAlbum, getArtistSongs, getSong, trackOf, type Song } from "@/lib/api"
 import { SITE_URL, albumPath, artistPath, clip, fmtCount, fmtTime, langName, slugify } from "@/lib/site"
 import { ArtistLinks, Crumbs, Hero, JsonLd, Section } from "@/components/ui"
-import { DownloadButton, PlayAll, TrackList } from "@/components/tracks"
+import { DownloadButton, FavButton, PlayAll, TrackList } from "@/components/tracks"
 
 export const dynamic = "force-dynamic"
 
@@ -105,6 +105,7 @@ export default async function SongPage({ params }: P) {
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
           <PlayAll tracks={[track, ...albumMore, ...artistMore]} />
+          <FavButton track={track} big />
           <DownloadButton track={track} big />
         </div>
       </Hero>

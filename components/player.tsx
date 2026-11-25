@@ -4,7 +4,8 @@ import Link from "next/link"
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react"
 import type { Track } from "@/lib/types"
 import { fmtTime } from "@/lib/site"
-import { DownloadIcon, MuteIcon, NextIcon, PauseIcon, PlayIcon, PrevIcon, SpinnerIcon, VolumeIcon } from "./icons"
+import { DownloadIcon, HeartIcon, MuteIcon, NextIcon, PauseIcon, PlayIcon, PrevIcon, SpinnerIcon, VolumeIcon } from "./icons"
+import { useFavorites } from "./favorites-context"
 
 const API = "/api/saavn"
 
@@ -60,6 +61,8 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [volume, setVolume] = useState(1)
   const [dl, setDl] = useState(false)
   const current = queue[index] ?? null
+  const { isFav, toggleFav } = useFavorites()
+  const fav = current ? isFav(current.id) : false
 
   const load = useCallback(async (q: Track[], i: number) => {
     const t = q[i]
@@ -190,6 +193,14 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
             </div>
 
             <div className="flex items-center justify-end gap-1 md:w-[30%]">
+              <button
+                onClick={() => current && toggleFav(current)}
+                aria-label={fav ? "Remove from Favorites" : "Add to Favorites"}
+                title={fav ? "In Favorites" : "Add to Favorites"}
+                className={`p-2 transition hover:bg-white/10 rounded-full ${fav ? "text-accent" : "text-white/60 hover:text-white"}`}
+              >
+                <HeartIcon filled={fav} className="h-5 w-5" />
+              </button>
               <button
                 onClick={async () => {
                   setDl(true)
