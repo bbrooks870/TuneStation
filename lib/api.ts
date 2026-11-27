@@ -157,7 +157,7 @@ export async function getAlbum(id: string) {
 }
 
 export async function getPlaylist(id: string) {
-  const d = await api(`/playlists?id=${encodeURIComponent(id)}`, 21600)
+  const d = await api(`/playlists?id=${encodeURIComponent(id)}&limit=100`, 21600)
   if (!d?.id || !d.name) return null
   return {
     id: String(d.id),
