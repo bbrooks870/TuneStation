@@ -216,10 +216,15 @@ export async function search(q: string) {
   }
 }
 
-/** Merge several playlist searches (deduped, in query order) – powers the mood pages. */
+/** Merge several playlist searches (deduped, interleaved) – powers the mood pages. */
 export async function searchPlaylists(queries: readonly string[]) {
   const res = await Promise.all(queries.map((q) => api(`/search/playlists?query=${encodeURIComponent(q)}&limit=20`, 86400).catch(() => null)))
+  // interleave (1st of each query, then 2nd…) so the top picks mix every query
+  const lists = res.map((r) => cards(r?.results))
   const seen = new Set<string>()
-  return res.flatMap((r) => cards(r?.results)).filter((c) => !seen.has(c.id) && !!seen.add(c.id))
+  const out: Card[] = []
+  for (let i = 0; i < Math.max(0, ...lists.map((l) => l.length)); i++)
+    for (const l of lists) if (l[i] && !seen.has(l[i].id) && seen.add(l[i].id)) out.push(l[i])
+  return out
 }
 

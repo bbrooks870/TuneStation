@@ -73,6 +73,7 @@ export const MOODS = [
   { key: "sufi", name: "Sufi & Ghazal", emoji: "🕌", tint: "from-lime-500/40", q: ["sufi", "ghazal", "qawwali"], blurb: "Soulful sufi songs, ghazals and qawwalis." },
   { key: "chill", name: "Chill", emoji: "☕", tint: "from-cyan-500/40", q: ["chill", "acoustic", "unplugged"], blurb: "Relaxed acoustic and unplugged songs to unwind with." },
   { key: "wedding", name: "Wedding", emoji: "💍", tint: "from-red-500/40", q: ["wedding", "sangeet", "shaadi"], blurb: "Sangeet, mehendi and baraat songs for the big fat Indian wedding." },
+  { key: "bus-driver", name: "Bus Driver", emoji: "🚌", tint: "from-yellow-600/40", q: ["90s kumar sanu", "alka yagnik", "udit narayan", "dard bhare", "truck driver", "bus driver"], blurb: "Full volume, dard bhare – 90s Kumar Sanu, Alka Yagnik and Udit Narayan hits, exactly what the bus driver plays on the highway." },
   { key: "kids", name: "Kids", emoji: "🧸", tint: "from-pink-500/40", q: ["kids", "nursery rhymes", "children"], blurb: "Nursery rhymes and fun songs for children." },
 ] as const
 
