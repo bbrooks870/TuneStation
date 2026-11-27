@@ -8,9 +8,10 @@ import { PlayAll, TrackList } from "@/components/tracks"
 
 export const dynamic = "force-dynamic"
 
-type P = { params: { slug: string; id: string } }
+type P = { params: Promise<{ slug: string; id: string }> }
 
-export async function generateMetadata({ params }: P): Promise<Metadata> {
+export async function generateMetadata(props: P): Promise<Metadata> {
+  const params = await props.params
   const a = await getAlbum(params.id)
   if (!a) return { title: "Album not found", robots: { index: false } }
   const who = a.artists.map((x) => x.name).slice(0, 3).join(", ")
@@ -29,7 +30,8 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
   }
 }
 
-export default async function AlbumPage({ params }: P) {
+export default async function AlbumPage(props: P) {
+  const params = await props.params
   const a = await getAlbum(params.id)
   if (!a) notFound()
   const url = albumPath(a.name, a.id)

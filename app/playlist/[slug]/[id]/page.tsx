@@ -7,9 +7,10 @@ import { PlayAll, TrackList } from "@/components/tracks"
 
 export const dynamic = "force-dynamic"
 
-type P = { params: { slug: string; id: string } }
+type P = { params: Promise<{ slug: string; id: string }> }
 
-export async function generateMetadata({ params }: P): Promise<Metadata> {
+export async function generateMetadata(props: P): Promise<Metadata> {
+  const params = await props.params
   const p = await getPlaylist(params.id)
   if (!p) return { title: "Playlist not found", robots: { index: false } }
   const title = clip(`${p.name} – ${p.songs.length} Songs | Play & Download`, 70)
@@ -26,7 +27,8 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
   }
 }
 
-export default async function PlaylistPage({ params }: P) {
+export default async function PlaylistPage(props: P) {
+  const params = await props.params
   const p = await getPlaylist(params.id)
   if (!p) notFound()
   const url = playlistPath(p.name, p.id)

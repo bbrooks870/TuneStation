@@ -8,17 +8,19 @@ import { SleepTimer } from "@/components/player"
 
 export const dynamic = "force-dynamic"
 
-type P = { params: { key: string } }
+type P = { params: Promise<{ key: string }> }
 const find = (k: string) => MOODS.find((m) => m.key === k)
 
-export function generateMetadata({ params }: P): Metadata {
+export async function generateMetadata(props: P): Promise<Metadata> {
+  const params = await props.params
   const m = find(params.key)
   if (!m) return { title: "Not found", robots: { index: false } }
   const title = `${m.name} Music & Songs – Listen Free Online`
   return { title, description: `${m.blurb} Stream ${m.name.toLowerCase()} playlists free on TuneStation – no login, no app.`, alternates: { canonical: moodPath(m.key) }, openGraph: { title, url: moodPath(m.key) } }
 }
 
-export default async function MoodPage({ params }: P) {
+export default async function MoodPage(props: P) {
+  const params = await props.params
   const m = find(params.key)
   if (!m) notFound()
   const lists = await searchPlaylists(m.q).catch(() => [])

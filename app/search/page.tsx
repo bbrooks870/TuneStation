@@ -5,7 +5,8 @@ import { PlayAll, TrackList } from "@/components/tracks"
 
 export const metadata: Metadata = { title: "Search songs, artists & albums", robots: { index: false, follow: true }, alternates: { canonical: "/search" } }
 
-export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
+export default async function SearchPage(props: { searchParams: Promise<{ q?: string }> }) {
+  const searchParams = await props.searchParams
   const q = (searchParams.q ?? "").trim().slice(0, 100)
   const r = q ? await search(q).catch(() => null) : null
   const tracks = r?.songs.map(trackOf) ?? []

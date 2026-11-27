@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next"
 import { getModules, getPlaylist } from "@/lib/api"
 import { LANGS, MOODS, SITE_URL, moodPath } from "@/lib/site"
 
-export const revalidate = 86400
+// Rendered per request (API isn't reachable during `docker build`, so a build-time sitemap had no songs); API calls are data-cached.
+export const dynamic = "force-dynamic"
 
 // ponytail: seeded from each language's home modules + the songs inside top charts; song/album/artist links on those pages let Google crawl the rest.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

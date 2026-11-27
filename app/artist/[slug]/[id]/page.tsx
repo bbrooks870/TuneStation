@@ -7,9 +7,10 @@ import { PlayAll, TrackList } from "@/components/tracks"
 
 export const dynamic = "force-dynamic"
 
-type P = { params: { slug: string; id: string } }
+type P = { params: Promise<{ slug: string; id: string }> }
 
-export async function generateMetadata({ params }: P): Promise<Metadata> {
+export async function generateMetadata(props: P): Promise<Metadata> {
+  const params = await props.params
   const a = await getArtist(params.id)
   if (!a) return { title: "Artist not found", robots: { index: false } }
   const year = new Date().getFullYear()
@@ -27,7 +28,8 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
   }
 }
 
-export default async function ArtistPage({ params }: P) {
+export default async function ArtistPage(props: P) {
+  const params = await props.params
   const a = await getArtist(params.id)
   if (!a) notFound()
   const url = artistPath(a.name, a.id)

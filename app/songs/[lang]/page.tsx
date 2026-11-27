@@ -9,7 +9,8 @@ export const dynamic = "force-dynamic"
 
 const year = () => new Date().getFullYear()
 
-export function generateMetadata({ params }: { params: { lang: string } }): Metadata {
+export async function generateMetadata(props: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const params = await props.params
   const L = langName(params.lang)
   const title = `Latest ${L} Songs ${year()} – Listen & Download Free`
   const description = `Play and download the latest ${L} songs of ${year()}: trending hits, new ${L} albums, top charts and playlists in 320kbps on TuneStation. Free, no login.`
@@ -21,7 +22,8 @@ export function generateMetadata({ params }: { params: { lang: string } }): Meta
   }
 }
 
-export default function LangPage({ params }: { params: { lang: string } }) {
+export default async function LangPage(props: { params: Promise<{ lang: string }> }) {
+  const params = await props.params
   if (!LANGS.some((l) => l.key === params.lang)) notFound()
   const L = langName(params.lang)
   return (

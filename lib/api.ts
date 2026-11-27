@@ -5,17 +5,20 @@ import type { Card, Track } from "./types"
 const BASE = process.env.SAAVN_API_URL || "http://127.0.0.1:3008/api"
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"
 
-/** null = genuinely not found (cached as 404); throws on outages so ISR keeps the last good page. */
+/**
+ * null = genuinely not found (API 404/400 or empty shape → page 404).
+ * Throws on outages/timeouts/5xx so pages answer 500 instead of telling Google the song is gone.
+ */
 async function api<T = any>(path: string, revalidate = 3600): Promise<T | null> {
-  try {
-    const r = await fetch(BASE + path, { headers: { "User-Agent": UA, Accept: "application/json" }, next: { revalidate } })
-    if (r.status === 404 || r.status === 400) return null
-    if (!r.ok) return null
-    const j = await r.json()
-    return (j?.data ?? null) as T
-  } catch {
-    return null
-  }
+  const r = await fetch(BASE + path, {
+    headers: { "User-Agent": UA, Accept: "application/json" },
+    next: { revalidate },
+    signal: AbortSignal.timeout(8000),
+  })
+  if (r.status === 404 || r.status === 400) return null
+  if (!r.ok) throw new Error(`saavn api ${r.status} ${path}`)
+  const j = await r.json()
+  return (j?.data ?? null) as T
 }
 
 /* ---------- normalisers (the API returns different shapes per endpoint) ---------- */
@@ -172,8 +175,8 @@ export async function getPlaylist(id: string) {
 export async function getArtist(id: string) {
   const [d, s, a] = await Promise.all([
     api(`/artists?id=${encodeURIComponent(id)}`, 86400),
-    api(`/artists/${encodeURIComponent(id)}/songs?page=1`, 86400),
-    api(`/artists/${encodeURIComponent(id)}/albums?page=1`, 86400),
+    api(`/artists/${encodeURIComponent(id)}/songs?page=1`, 86400).catch(() => null),
+    api(`/artists/${encodeURIComponent(id)}/albums?page=1`, 86400).catch(() => null),
   ])
   if (!d?.id || !d.name) return null
   const bio: string = Array.isArray(d.bio) ? d.bio.map((b: any) => decode(b?.text)).filter(Boolean).join("\n\n") : ""
@@ -202,8 +205,8 @@ export async function getArtistSongs(id: string) {
 export async function search(q: string) {
   const qs = encodeURIComponent(q)
   const [songs, all] = await Promise.all([
-    api(`/search/songs?query=${qs}&page=1&limit=20`, 600),
-    api(`/search?query=${qs}`, 600)
+    api(`/search/songs?query=${qs}&page=1&limit=20`, 600).catch(() => null),
+    api(`/search?query=${qs}`, 600).catch(() => null),
   ])
   return {
     songs: ((songs?.results ?? []) as any[]).map(toSong),
@@ -215,7 +218,7 @@ export async function search(q: string) {
 
 /** Merge several playlist searches (deduped, in query order) – powers the mood pages. */
 export async function searchPlaylists(queries: readonly string[]) {
-  const res = await Promise.all(queries.map((q) => api(`/search/playlists?query=${encodeURIComponent(q)}&limit=20`, 86400)))
+  const res = await Promise.all(queries.map((q) => api(`/search/playlists?query=${encodeURIComponent(q)}&limit=20`, 86400).catch(() => null)))
   const seen = new Set<string>()
   return res.flatMap((r) => cards(r?.results)).filter((c) => !seen.has(c.id) && !!seen.add(c.id))
 }

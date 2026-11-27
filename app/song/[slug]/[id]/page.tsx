@@ -8,12 +8,13 @@ import { DownloadButton, FavButton, PlayAll, TrackList } from "@/components/trac
 
 export const dynamic = "force-dynamic"
 
-type P = { params: { slug: string; id: string } }
+type P = { params: Promise<{ slug: string; id: string }> }
 
 const by = (s: Song) => s.primary.map((a) => a.name).join(", ") || s.artists
 const isoDur = (sec: number) => `PT${Math.floor(sec / 60)}M${sec % 60}S`
 
-export async function generateMetadata({ params }: P): Promise<Metadata> {
+export async function generateMetadata(props: P): Promise<Metadata> {
+  const params = await props.params
   const s = await getSong(params.id)
   if (!s) return { title: "Song not found", robots: { index: false } }
   const lang = s.language ? langName(s.language) : ""
@@ -31,7 +32,8 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
   }
 }
 
-export default async function SongPage({ params }: P) {
+export default async function SongPage(props: P) {
+  const params = await props.params
   const s = await getSong(params.id)
   if (!s) notFound()
   if (params.slug !== slugify(s.name)) permanentRedirect(s.href)
