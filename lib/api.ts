@@ -112,7 +112,7 @@ function toCard(r: any): Card | null {
 const cards = (a: any) => (Array.isArray(a) ? a.map(toCard).filter(Boolean) as Card[] : [])
 
 /** Module songs carry no stream URL; the player resolves it on play. */
-function toTrack(r: any): Track {
+export function toTrack(r: any): Track {
   const s = toSong(r)
   return { id: s.id, name: s.name, artists: s.artists, image: s.image, thumb: s.thumb, href: s.href, src: s.src, duration: s.duration, album: s.album }
 }
@@ -212,3 +212,11 @@ export async function search(q: string) {
     playlists: cards(all?.playlists?.results),
   }
 }
+
+/** Merge several playlist searches (deduped, in query order) – powers the mood pages. */
+export async function searchPlaylists(queries: readonly string[]) {
+  const res = await Promise.all(queries.map((q) => api(`/search/playlists?query=${encodeURIComponent(q)}&limit=20`, 86400)))
+  const seen = new Set<string>()
+  return res.flatMap((r) => cards(r?.results)).filter((c) => !seen.has(c.id) && !!seen.add(c.id))
+}
+

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { search, trackOf } from "@/lib/api"
-import { Grid, LangChips, SearchBox, Section } from "@/components/ui"
+import { Grid, LangChips, MoodGrid, SearchBox, Section } from "@/components/ui"
 import { PlayAll, TrackList } from "@/components/tracks"
 
 export const metadata: Metadata = { title: "Search songs, artists & albums", robots: { index: false, follow: true }, alternates: { canonical: "/search" } }
@@ -19,6 +19,8 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
         <div className="mt-6">
           <p className="mb-3 text-sm text-white/55">Or browse by language</p>
           <LangChips />
+          <p className="mb-3 mt-8 text-sm text-white/55">Or pick a mood</p>
+          <MoodGrid />
         </div>
       )}
       {q && !r && <p className="mt-8 text-white/60">Search is busy right now – please try again in a moment.</p>}

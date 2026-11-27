@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Card } from "@/lib/types"
-import { LANGS, artistPath } from "@/lib/site"
+import { LANGS, MOODS, artistPath, moodPath } from "@/lib/site"
 import { PlayIcon, SearchIcon } from "./icons"
 
 const CDN_LOGO = "https://cdn.jsdelivr.net/gh/bbrooks870/TuneStation@master/public/logo.png"
@@ -46,10 +46,14 @@ export function Header() {
             href="/favorites"
             className="flex items-center gap-1.5 rounded-full bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80 transition hover:bg-white/10 hover:text-white md:text-sm"
           >
-            <span className="text-accent">♥</span>
-            <span>Favorites</span>
+            <span className="text-accent" aria-hidden="true">♥</span>
+            <span className="sr-only sm:not-sr-only">Favorites</span>
+          </Link>
+          <Link href="/mood" className="rounded-full bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80 transition hover:bg-white/10 hover:text-white lg:hidden">
+            Moods
           </Link>
           <div className="hidden items-center gap-5 lg:flex">
+            <Link href="/mood" className="hover:text-white">Moods</Link>
             <Link href="/songs/hindi" className="hover:text-white">Hindi</Link>
             <Link href="/songs/punjabi" className="hover:text-white">Punjabi</Link>
             <Link href="/songs/english" className="hover:text-white">English</Link>
@@ -200,7 +204,7 @@ export function JsonLd({ data }: { data: object }) {
 export function Footer() {
   return (
     <footer className="mt-20 border-t border-white/5 pb-28">
-      <div className="mx-auto grid max-w-screen-2xl gap-8 px-4 py-10 text-sm text-white/55 md:grid-cols-[1.4fr_1fr_1fr] md:px-6">
+      <div className="mx-auto grid max-w-screen-2xl gap-8 px-4 py-10 text-sm text-white/55 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:px-6">
         <div>
           <Logo />
           <p className="mt-3 max-w-sm">Free online music player. Stream and download Hindi, Punjabi, English and regional songs in 320kbps — no login, no app.</p>
@@ -212,6 +216,18 @@ export function Footer() {
               <li key={l.key}>
                 <Link href={`/songs/${l.key}`} className="hover:text-white">
                   {l.name} songs
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="mb-3 font-semibold text-white">Music by mood</p>
+          <ul className="grid grid-cols-2 gap-1.5">
+            {MOODS.map((m) => (
+              <li key={m.key}>
+                <Link href={moodPath(m.key)} className="hover:text-white">
+                  {m.name}
                 </Link>
               </li>
             ))}
@@ -248,5 +264,32 @@ export function ArtistLinks({ list }: { list: { id: string; name: string }[] }) 
         </span>
       ))}
     </>
+  )
+}
+
+/** Colourful mood/activity tiles (Meditation, Sleep, Workout…). */
+export function MoodGrid({ active, scroll = false }: { active?: string; scroll?: boolean }) {
+  return (
+    <div
+      className={`grid gap-3 lg:grid-cols-7 ${
+        scroll
+          ? "no-scrollbar -mx-4 auto-cols-[42%] grid-flow-col grid-rows-2 overflow-x-auto px-4 sm:auto-cols-[30%] md:mx-0 md:grid-flow-row md:grid-cols-4 md:grid-rows-none md:px-0"
+          : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4"
+      }`}
+    >
+      {MOODS.map((m) => (
+        <Link
+          key={m.key}
+          href={moodPath(m.key)}
+          aria-current={active === m.key ? "page" : undefined}
+          className={`flex h-20 items-center gap-3 rounded-2xl bg-gradient-to-br ${m.tint} to-white/[.04] px-4 font-semibold text-white ring-1 transition hover:scale-[1.02] hover:ring-white/30 ${
+            active === m.key ? "ring-white/60" : "ring-white/10"
+          }`}
+        >
+          <span className="text-2xl" aria-hidden="true">{m.emoji}</span>
+          <span className="leading-tight">{m.name}</span>
+        </Link>
+      ))}
+    </div>
   )
 }

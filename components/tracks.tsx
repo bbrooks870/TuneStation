@@ -134,3 +134,37 @@ export function TrackList({ tracks, showAlbum = true, numbered = true }: { track
     </ol>
   )
 }
+
+/** "Continue listening" – last played songs on this device; renders nothing for first-time visitors. */
+export function RecentlyPlayed() {
+  const { recent } = usePlayer()
+  if (!recent.length) return null
+  return (
+    <section className="mt-10">
+      <h2 className="mb-4 text-xl font-bold tracking-tight text-white md:text-2xl">Recently played</h2>
+      <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0">
+        {recent.slice(0, 12).map((t, i) => (
+          <RecentTile key={t.id} tracks={recent} i={i} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function RecentTile({ tracks, i }: { tracks: Track[]; i: number }) {
+  const p = usePlayer()
+  const t = tracks[i]
+  const on = p.current?.id === t.id && p.playing
+  return (
+    <button onClick={() => (p.current?.id === t.id ? p.toggle() : p.play(tracks, i))} aria-label={on ? `Pause ${t.name}` : `Play ${t.name}`} className="group w-32 shrink-0 text-left md:w-36">
+      <span className="relative block aspect-square overflow-hidden rounded-lg bg-white/5">
+        <img src={t.image} alt="" width={150} height={150} loading="lazy" className="h-full w-full object-cover transition group-hover:scale-105" />
+        <span className={`absolute bottom-2 right-2 grid h-9 w-9 place-items-center rounded-full bg-accent text-night-900 shadow-lg transition ${on ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+          {on ? <PauseIcon className="h-4 w-4" /> : <PlayIcon className="h-4 w-4" />}
+        </span>
+      </span>
+      <span className="mt-2 block truncate text-sm font-semibold text-white">{t.name}</span>
+      <span className="block truncate text-xs text-white/55">{t.artists}</span>
+    </button>
+  )
+}

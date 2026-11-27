@@ -1,5 +1,6 @@
 import { ModulesView } from "@/components/modules-view"
-import { JsonLd, LangChips, SearchBox } from "@/components/ui"
+import { JsonLd, LangChips, MoodGrid, SearchBox, Section } from "@/components/ui"
+import { RecentlyPlayed } from "@/components/tracks"
 import { SITE_URL } from "@/lib/site"
 
 export const dynamic = "force-dynamic"
@@ -21,6 +22,10 @@ const FAQ = [
   {
     q: "Does the music keep playing while I browse?",
     a: "Yes. The player stays at the bottom of the screen, so you can search and open other songs, albums and artists without stopping your music.",
+  },
+  {
+    q: "Is there music for meditation, sleep or workouts?",
+    a: "Yes. Browse by mood for meditation, sleep, focus, workout, romantic, party, devotional and more. A sleep timer in the player stops the music automatically after 15 minutes to 1.5 hours.",
   },
 ]
 
@@ -76,6 +81,12 @@ export default function Home() {
           <LangChips />
         </div>
       </section>
+
+      <RecentlyPlayed />
+
+      <Section title="Browse by mood" href="/mood">
+        <MoodGrid scroll />
+      </Section>
 
       <ModulesView lang="hindi" />
 

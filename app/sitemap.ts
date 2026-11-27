@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 import { getModules, getPlaylist } from "@/lib/api"
-import { LANGS, SITE_URL } from "@/lib/site"
+import { LANGS, MOODS, SITE_URL, moodPath } from "@/lib/site"
 
 export const revalidate = 86400
 
@@ -13,6 +13,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   add("/", 1, "hourly")
   LANGS.forEach((l) => add(`/songs/${l.key}`, 0.9, "hourly"))
+  add("/mood", 0.8, "weekly")
+  MOODS.forEach((m) => add(moodPath(m.key), 0.8, "daily"))
   add("/about", 0.3, "monthly")
   add("/contact", 0.3, "monthly")
   add("/terms", 0.2, "monthly")

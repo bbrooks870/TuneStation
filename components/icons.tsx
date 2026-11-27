@@ -39,3 +39,16 @@ export const EqIcon = ({ className = "h-4 w-4" }: P) => (
     <span className="eq-bar w-[3px] bg-current [animation-delay:.4s]" />
   </span>
 )
+const stroke = (d: React.ReactNode) =>
+  function Icon({ className = "h-5 w-5" }: P) {
+    return (
+      <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        {d}
+      </svg>
+    )
+  }
+export const ShuffleIcon = stroke(<path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />)
+export const RepeatIcon = stroke(<path d="m17 2 4 4-4 4M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v1a4 4 0 0 1-4 4H3" />)
+export const MoonIcon = stroke(<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />)
+export const ChevronDownIcon = stroke(<path d="m6 9 6 6 6-6" />)
+export const ClockIcon = stroke(<path d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />)
