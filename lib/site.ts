@@ -60,21 +60,21 @@ export function fmtCount(n: number) {
 
 /** Mood / activity collections. `q` = JioSaavn playlist searches merged into one page. */
 export const MOODS = [
-  { key: "meditation", name: "Meditation", emoji: "🧘", tint: "from-teal-500/40", q: ["meditation", "meditation mantra", "relaxing flute", "spiritual healing"], blurb: "Calm mantras, flute and ambient music for meditation, yoga and mindfulness." },
-  { key: "sleep", name: "Sleep", emoji: "🌙", tint: "from-indigo-500/40", q: ["sleep", "deep sleep", "lullaby", "rain sounds"], blurb: "Soft, slow music to help you fall asleep – set the sleep timer and drift off." },
-  { key: "focus", name: "Focus & Study", emoji: "📚", tint: "from-sky-500/40", q: ["study", "focus", "lofi", "instrumental"], blurb: "Lo-fi beats and instrumentals that help you concentrate while studying or working." },
-  { key: "workout", name: "Workout", emoji: "💪", tint: "from-orange-500/40", q: ["workout", "gym", "running", "power"], blurb: "High-energy Bollywood, Punjabi and English tracks for the gym and your run." },
-  { key: "romantic", name: "Romantic", emoji: "❤️", tint: "from-rose-500/40", q: ["romantic", "love songs", "romance hindi"], blurb: "The best romantic songs – Bollywood love songs, duets and soft melodies." },
-  { key: "sad", name: "Sad & Heartbreak", emoji: "💔", tint: "from-slate-500/40", q: ["sad songs", "heartbreak", "breakup"], blurb: "Emotional sad songs and heartbreak hits for when you need a good cry." },
-  { key: "party", name: "Party", emoji: "🎉", tint: "from-fuchsia-500/40", q: ["party", "dance hits", "club"], blurb: "Party anthems and dance floor hits in Hindi, Punjabi and English." },
-  { key: "devotional", name: "Devotional", emoji: "🙏", tint: "from-amber-500/40", q: ["devotional", "bhajan", "aarti", "shiv"], blurb: "Bhajans, aartis, mantras and devotional songs for puja and peaceful mornings." },
-  { key: "road-trip", name: "Road Trip", emoji: "🚗", tint: "from-emerald-500/40", q: ["road trip", "travel", "long drive"], blurb: "Long drive songs and travel playlists for the open road." },
-  { key: "retro", name: "Retro & 90s", emoji: "📻", tint: "from-yellow-500/40", q: ["90s", "retro", "old is gold", "80s bollywood"], blurb: "Old is gold – evergreen 70s, 80s and 90s Bollywood classics." },
-  { key: "sufi", name: "Sufi & Ghazal", emoji: "🕌", tint: "from-lime-500/40", q: ["sufi", "ghazal", "qawwali"], blurb: "Soulful sufi songs, ghazals and qawwalis." },
-  { key: "chill", name: "Chill", emoji: "☕", tint: "from-cyan-500/40", q: ["chill", "acoustic", "unplugged"], blurb: "Relaxed acoustic and unplugged songs to unwind with." },
-  { key: "wedding", name: "Wedding", emoji: "💍", tint: "from-red-500/40", q: ["wedding", "sangeet", "shaadi"], blurb: "Sangeet, mehendi and baraat songs for the big fat Indian wedding." },
-  { key: "bus-driver", name: "Bus Driver", emoji: "🚌", tint: "from-yellow-600/40", q: ["90s kumar sanu", "alka yagnik", "udit narayan", "dard bhare", "truck driver", "bus driver"], blurb: "Full volume, dard bhare – 90s Kumar Sanu, Alka Yagnik and Udit Narayan hits, exactly what the bus driver plays on the highway." },
-  { key: "kids", name: "Kids", emoji: "🧸", tint: "from-pink-500/40", q: ["kids", "nursery rhymes", "children"], blurb: "Nursery rhymes and fun songs for children." },
+  { key: "meditation", name: "Meditation", tint: "from-teal-500/40", q: ["meditation", "meditation mantra", "relaxing flute", "spiritual healing"], blurb: "Calm mantras, flute and ambient music for meditation, yoga and mindfulness." },
+  { key: "sleep", name: "Sleep", tint: "from-indigo-500/40", q: ["sleep", "deep sleep", "lullaby", "rain sounds"], blurb: "Soft, slow music to help you fall asleep – set the sleep timer and drift off." },
+  { key: "focus", name: "Focus & Study", tint: "from-sky-500/40", q: ["study", "focus", "lofi", "instrumental"], blurb: "Lo-fi beats and instrumentals that help you concentrate while studying or working." },
+  { key: "workout", name: "Workout", tint: "from-orange-500/40", q: ["workout", "gym", "running", "power"], blurb: "High-energy Bollywood, Punjabi and English tracks for the gym and your run." },
+  { key: "romantic", name: "Romantic", tint: "from-rose-500/40", q: ["romantic", "love songs", "romance hindi"], blurb: "The best romantic songs – Bollywood love songs, duets and soft melodies." },
+  { key: "sad", name: "Sad & Heartbreak", tint: "from-slate-500/40", q: ["sad songs", "heartbreak", "breakup"], blurb: "Emotional sad songs and heartbreak hits for when you need a good cry." },
+  { key: "party", name: "Party", tint: "from-fuchsia-500/40", q: ["party", "dance hits", "club"], blurb: "Party anthems and dance floor hits in Hindi, Punjabi and English." },
+  { key: "devotional", name: "Devotional", tint: "from-amber-500/40", q: ["devotional", "bhajan", "aarti", "shiv"], blurb: "Bhajans, aartis, mantras and devotional songs for puja and peaceful mornings." },
+  { key: "road-trip", name: "Road Trip", tint: "from-emerald-500/40", q: ["road trip", "travel", "long drive"], blurb: "Long drive songs and travel playlists for the open road." },
+  { key: "retro", name: "Retro & 90s", tint: "from-yellow-500/40", q: ["90s", "retro", "old is gold", "80s bollywood"], blurb: "Old is gold – evergreen 70s, 80s and 90s Bollywood classics." },
+  { key: "sufi", name: "Sufi & Ghazal", tint: "from-lime-500/40", q: ["sufi", "ghazal", "qawwali"], blurb: "Soulful sufi songs, ghazals and qawwalis." },
+  { key: "chill", name: "Chill", tint: "from-cyan-500/40", q: ["chill", "acoustic", "unplugged"], blurb: "Relaxed acoustic and unplugged songs to unwind with." },
+  { key: "wedding", name: "Wedding", tint: "from-red-500/40", q: ["wedding", "sangeet", "shaadi"], blurb: "Sangeet, mehendi and baraat songs for the big fat Indian wedding." },
+  { key: "bus-driver", name: "Bus Driver", tint: "from-yellow-600/40", q: ["90s kumar sanu", "alka yagnik", "udit narayan", "dard bhare", "truck driver", "bus driver"], blurb: "Full volume, dard bhare – 90s Kumar Sanu, Alka Yagnik and Udit Narayan hits, exactly what the bus driver plays on the highway." },
+  { key: "kids", name: "Kids", tint: "from-pink-500/40", q: ["kids", "nursery rhymes", "children"], blurb: "Nursery rhymes and fun songs for children." },
 ] as const
 
 export const moodPath = (key: string) => `/mood/${key}`

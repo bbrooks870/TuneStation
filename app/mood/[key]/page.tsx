@@ -4,6 +4,7 @@ import { getPlaylist, searchPlaylists, trackOf } from "@/lib/api"
 import { MOODS, SITE_URL, moodPath } from "@/lib/site"
 import { Crumbs, Grid, JsonLd, MoodGrid, Section } from "@/components/ui"
 import { PlayAll, TrackList } from "@/components/tracks"
+import { MoodIcon } from "@/components/mood-icons"
 import { SleepTimer } from "@/components/player"
 
 export const dynamic = "force-dynamic"
@@ -45,7 +46,7 @@ export default async function MoodPage(props: P) {
       />
       <Crumbs items={[{ name: "Home", href: "/" }, { name: "Moods", href: "/mood" }, { name: m.name }]} />
       <section className={`relative isolate -mx-4 overflow-hidden bg-gradient-to-br ${m.tint} to-transparent px-4 py-8 md:mx-0 md:rounded-3xl md:p-10`}>
-        <p className="text-5xl" aria-hidden="true">{m.emoji}</p>
+        <span className="grid h-16 w-16 place-items-center rounded-2xl bg-white/10 text-white"><MoodIcon k={m.key} className="h-8 w-8" /></span>
         <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-white md:text-5xl">{m.name} music</h1>
         <p className="mt-3 max-w-2xl text-white/75">{m.blurb}</p>
         <div className="mt-6 flex flex-wrap items-center gap-3">

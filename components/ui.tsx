@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { Card } from "@/lib/types"
 import { LANGS, MOODS, artistPath, moodPath } from "@/lib/site"
 import { PlayIcon, SearchIcon } from "./icons"
+import { MoodIcon } from "./mood-icons"
 
 const CDN_LOGO = "https://cdn.jsdelivr.net/gh/bbrooks870/TuneStation@master/public/logo.png"
 
@@ -286,7 +287,7 @@ export function MoodGrid({ active, scroll = false }: { active?: string; scroll?:
             active === m.key ? "ring-white/60" : "ring-white/10"
           }`}
         >
-          <span className="text-2xl" aria-hidden="true">{m.emoji}</span>
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 text-white"><MoodIcon k={m.key} /></span>
           <span className="leading-tight">{m.name}</span>
         </Link>
       ))}
