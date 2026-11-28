@@ -9,14 +9,25 @@ const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
  * null = genuinely not found (API 404/400 or empty shape → page 404).
  * Throws on outages/timeouts/5xx so pages answer 500 instead of telling Google the song is gone.
  */
-async function api<T = any>(path: string, revalidate = 3600): Promise<T | null> {
-  const r = await fetch(BASE + path, {
-    headers: { "User-Agent": UA, Accept: "application/json" },
-    next: { revalidate },
-    signal: AbortSignal.timeout(8000),
-  })
+async function api<T = any>(path: string, revalidate = 3600, retry = true): Promise<T | null> {
+  // ponytail: one retry after 300ms for upstream blips (5xx / dropped connection); not on timeout, so worst case stays ~8s.
+  const again = async (e: unknown) => {
+    if (!retry || (e as Error)?.name === "TimeoutError") throw e
+    await new Promise((ok) => setTimeout(ok, 300))
+    return api<T>(path, revalidate, false)
+  }
+  let r: Response
+  try {
+    r = await fetch(BASE + path, {
+      headers: { "User-Agent": UA, Accept: "application/json" },
+      next: { revalidate },
+      signal: AbortSignal.timeout(8000),
+    })
+  } catch (e) {
+    return again(e)
+  }
   if (r.status === 404 || r.status === 400) return null
-  if (!r.ok) throw new Error(`saavn api ${r.status} ${path}`)
+  if (!r.ok) return r.status >= 500 ? again(new Error(`saavn api ${r.status} ${path}`)) : Promise.reject(new Error(`saavn api ${r.status} ${path}`))
   const j = await r.json()
   return (j?.data ?? null) as T
 }
